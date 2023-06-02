@@ -1,0 +1,128 @@
+package Programming;
+
+public class Regular extends Student{
+    //instance variables
+    private int numOfModules;
+    private int numOfCreditHours;
+    private double daysPresent;
+    private boolean isGrantedScholarship;
+    
+    
+    /**
+     * Constructor for the Regular class.
+     * Calling superclass constructor which has four parameters.
+     * Calling parentclass mutator methods with the corresponding parameters.
+     * Initializing attribute isGrantedScholarship to false
+     */
+    public Regular(int enrollmentID, String dateOfBirth, String courseName, String studentName, String dateOfEnrollment, int courseDuration,
+                   int tuitionFee, int numOfModules, int numOfCreditHours, double daysPresent){
+        super(studentName, dateOfBirth, courseDuration, tuitionFee);
+        super.setEnrollmentID(enrollmentID);
+        super.setCourseName(courseName);
+        super.setDateOfEnrollment(dateOfEnrollment);
+        this.numOfModules = numOfModules;
+        this.numOfCreditHours = numOfCreditHours;
+        this.daysPresent = daysPresent;
+        this.isGrantedScholarship = false;
+    }
+    
+    //returns the value of private variable numOfModules
+    public int getNumOfModules(){
+        return numOfModules;
+    }
+    
+    //sets the value for numOfModules
+    public void setNumOfModules(int numOfModules){
+        this.numOfModules = numOfModules;
+    }
+    
+    //returns the value for private variable numOfCreditHours
+    public int getNumOfCreditHours(){
+        return numOfCreditHours;
+    }
+    
+    //sets the value for numOfCreditHours
+    public void setNumOfCreditHours(int numOfCreditHours){
+        this.numOfCreditHours = numOfCreditHours;
+    }
+    
+    //returns the value for private variable daysPresent
+    public double getDaysPresent(){
+        return daysPresent;
+    }
+    
+    //sets the value for daysPresent
+    public void setDaysPresent(double daysPresent){
+        this.daysPresent = daysPresent;
+    }
+    
+    //returns the value for private variable isGrantedScholarship
+    public boolean getIsGrantedScholarship(){
+        return isGrantedScholarship;
+    }
+    
+    //sets the value for isGrantedScholarship
+    public void setIsGrantedScholarship(boolean isGrantedScholarship){
+        this.isGrantedScholarship = isGrantedScholarship;
+    }
+     
+    /*This method calculates the percentage of days present in the course and determines the grades based on it.
+     It takes a parameter 'daysPresent' which is the number of days the student was present in the course.*/
+
+    public char presentPercentage(double daysPresent){
+    	int courseDuration = super.getCourseDuration();
+    	char attendanceGrade;
+        if(daysPresent > courseDuration){
+            System.out.println("Error: The number of days cannot be greater than courseDuration");
+            attendanceGrade = ' ';
+        }
+        
+        
+        //Calculating the percentage of days present using the formula (daysPresent / getCourseDuration()) * 100.
+        double presentPercentage = (daysPresent / courseDuration) * 100; 
+        
+        //Using if-else-if statement for determining grades
+        if(presentPercentage >= 80){
+            setIsGrantedScholarship(true);
+            attendanceGrade = 'A';
+        }
+        else if(presentPercentage >= 60){
+            setIsGrantedScholarship(false);
+            attendanceGrade = 'B';
+        }
+        else if(presentPercentage >= 40){
+            setIsGrantedScholarship(false);
+            attendanceGrade = 'C';
+        }
+        else if(presentPercentage >= 20){
+            setIsGrantedScholarship(false);
+            attendanceGrade = 'D';
+        }
+        else{
+            setIsGrantedScholarship(false);
+            attendanceGrade = 'E';
+        }
+        return attendanceGrade;
+    }
+    
+    /*printing the name of the student, course name, enrollment ID, and date of enrollment, and also checks if the student has 
+     been granted a scholarship. If the student has been granted a scholarship then the method will a message indicating so. */
+
+    public void grantCertificate(String courseName, String enrollmentID, String dateOfEnrollment) {
+        System.out.println(super.getStudentName() + " has graduated from " + courseName + " with enrollment ID " + enrollmentID + " and date of enrollment " + dateOfEnrollment + ".");
+        if (isGrantedScholarship) {
+            System.out.println("The scholarship has been granted.");
+        }
+    }
+    
+    
+    //method overriding
+    public void display(){
+        // The method that overrides the 'display' method of the parent class and also adds additional fields related to the course.
+        // Firstly calling the parent's 'display' method using the 'super' keyword and then it displays the course-specific fields.
+        super.display();
+        System.out.println("Number of Modules: " + this.getNumOfModules());
+        System.out.println("Number of Credit Hours: " + this.getNumOfCreditHours());
+        System.out.println("Days Present: " + this.getDaysPresent());
+    }
+}

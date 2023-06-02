@@ -1,0 +1,41 @@
+package servlets;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class DbConnection {
+	public void registerStudent(String id, String name, String gender, String password) {
+		
+		try {
+
+			String query="INSERT INTO registration (Id, Name, Gender, Password) VALUES (?,?,?,?)";
+
+			Class.forName("com.mysql.jdbc.Driver");
+
+			Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/studentrecordsystem","root","");
+
+			PreparedStatement st=connection.prepareStatement(query);
+
+			st.setString(1, id);
+
+			st.setString(2, name);
+
+			st.setString(3, gender);
+			
+			st.setString(4, password);
+			
+			System.out.print(st);
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+			System.out.print("Error");
+			
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			System.out.print("Error2");
+		}
+	}
+}
